@@ -1,5 +1,6 @@
 # .rosrc
-ROS1 Help macros for .bashrc
+ROS1 Help macros for `.bashrc`
+
 Startup scripts for ros1 enviroment
 
 Copy the folder `.rosrc` in your home directory
