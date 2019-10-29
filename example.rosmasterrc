@@ -1,0 +1,13 @@
+#!/bin/bash
+
+#Insert functions to select the rosmaster
+
+# EXAMPLE
+#rename this file as .rosmasterrc
+#
+# this functiol will set [insert_rosmaster_uri]:11311 as rosmaster
+#
+#function master1_ros() {
+#   set_ros_master http://[insert_rosmaster_uri]:11311
+#}
+

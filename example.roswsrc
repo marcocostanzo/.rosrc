@@ -1,0 +1,14 @@
+#!/bin/bash
+
+#Insert functions to select the catkin_ws
+
+#EXAMPLE
+#rename this file as .roswsrc
+#
+# this function will source the setup.bash inside ~/[PATH_TO]/[WS_FOLDER]/devel/
+#
+#function ws_1() {
+#   set_ros_ws ~/[PATH_TO]/[WS_FOLDER]
+#}
+#
+

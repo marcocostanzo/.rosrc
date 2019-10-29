@@ -1,0 +1,68 @@
+#!/bin/bash
+#
+# Usage
+# .rosrc [rosdistro] [interface]
+# rosdistro is the distro name of ros e.g. kinetic  [MANDATORY]
+# interface is the interface to use to connecto to a remote rosmaster
+#           use ifconfing to se your interfaces
+#
+# Put the following in your bashrc and change "kinetic" and "enp3s0" as you desire
+#
+#  if [ -f ~/.rosrc ]; then
+#    source ~/.rosrc kinetic enp3s0
+#  fi
+#  
+#
+#
+# You can create ~/.rosmasterrc and ~/.roswsrc and write functions to select a custom rosmaster or a catkin_ws
+#
+
+#ROS distro
+source /opt/ros/$1/setup.bash
+unset ROS_MASTER_URI
+
+#Select the interface to use with ROS
+# use the command ifconfig to show your interfaces
+ros_interface=$2
+
+# Internal Function
+function set_ros_ip() {
+   export ROS_IP=$(/sbin/ifconfig ${ros_interface} | grep 'inet addr' | cut -d: -f2 | awk '{print $1}')
+}
+
+# Set intput as ROS_MASTER_URI
+function set_ros_master() {
+   export ROS_MASTER_URI=$1
+   set_ros_ip
+}
+
+# Set this pc as ROS_MASTER_URI
+function set_this_as_ros_master() {
+   set_ros_ip
+   export ROS_MASTER_URI=http://${ROS_IP}:11311   
+}
+
+# Source the input ws
+function set_ros_ws() {
+   export ros_ws=$1
+   source $ros_ws/devel/setup.bash
+   echo "ROS WS SELECTED: $ros_ws"
+}
+
+# cd in the sourced ws
+alias cdcatkin='cd $ros_ws'
+
+# Reset ros ws - i.e. source the base ros ws
+alias source_ros='source /opt/ros/$ROS_DISTRO/setup.bash'
+
+# build with tag release
+alias catkin_build_release='catkin build -DCMAKE_BUILD_TYPE=Release'
+
+# You can create .rosmasterrc and .roswsrc to create function to select a custom rosmaster or a catkin_ws
+if [ -f ~/.rosmasterrc ]; then
+    source ~/.rosmasterrc
+fi
+
+if [ -f ~/.roswsrc ]; then
+    source ~/.roswsrc
+fi
