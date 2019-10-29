@@ -11,7 +11,7 @@ cd ~
 git clone https://github.com/marcocostanzo/.rosrc.git
 ```
 
-Add this in your `~/.bashrc.`
+Add this in your `~/.bashrc`
 ```bash
 if [ -f ~/.rosrc ]; then
     source ~/.rosrc kinetic enp3s0
