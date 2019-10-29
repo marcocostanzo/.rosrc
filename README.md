@@ -17,5 +17,5 @@ if [ -f ~/.rosrc ]; then
     source ~/.rosrc kinetic enp3s0
 fi
 ```
-Change "kinetic" with your rosdistro and "enp3s0" with the name of your network interface (to use with extenal ros-network).
+Change `kinetic` with your rosdistro and `enp3s0` with the name of your network interface (to use with extenal ros-network).
 You can use `ifconfig` to check your interfaces.
