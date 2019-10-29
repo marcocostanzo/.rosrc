@@ -8,13 +8,13 @@
 #
 # Put the following in your bashrc and change "kinetic" and "enp3s0" as you desire
 #
-#  if [ -f ~/.rosrc ]; then
-#    source ~/.rosrc kinetic enp3s0
+#  if [ -f ~/.rosrc/rosrc ]; then
+#    source ~/.rosrc/rosrc kinetic enp3s0
 #  fi
 #  
 #
 #
-# You can create ~/.rosmasterrc and ~/.roswsrc and write functions to select a custom rosmaster or a catkin_ws
+# You can create ~/.rosrc/rosmasterrc and ~/.rosrc/roswsrc and write functions to select a custom rosmaster or a catkin_ws
 #
 
 #ROS distro
@@ -59,10 +59,10 @@ alias source_ros='source /opt/ros/$ROS_DISTRO/setup.bash'
 alias catkin_build_release='catkin build -DCMAKE_BUILD_TYPE=Release'
 
 # You can create .rosmasterrc and .roswsrc to create function to select a custom rosmaster or a catkin_ws
-if [ -f ~/.rosmasterrc ]; then
-    source ~/.rosmasterrc
+if [ -f ~/.rosrc/rosmasterrc ]; then
+    source ~/.rosrc/rosmasterrc
 fi
 
-if [ -f ~/.roswsrc ]; then
-    source ~/.roswsrc
+if [ -f ~/.rosrc/roswsrc ]; then
+    source ~/.rosrc/roswsrc
 fi
