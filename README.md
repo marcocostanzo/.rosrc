@@ -13,9 +13,8 @@ git clone https://github.com/marcocostanzo/.rosrc.git
 
 Add this in your `~/.bashrc`
 ```bash
-if [ -f ~/.rosrc/rosrc ]; then
-   source ~/.rosrc/rosrc kinetic enp3s0
+if [ -f ~/.rosrc/rosrc.bash ]; then
+   source ~/.rosrc/rosrc.bash /opt/ros/kinetic
 fi
 ```
-Change `kinetic` with your rosdistro and `enp3s0` with the name of your network interface (to use with extenal ros-network).
-You can use `ifconfig` to check your interfaces.
+Change `/opt/ros/kinetic` with your rosdistro install folder.

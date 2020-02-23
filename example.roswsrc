@@ -8,7 +8,7 @@
 # this function will source the setup.bash inside ~/[PATH_TO]/[WS_FOLDER]/devel/
 #
 #function ws_1() {
-#   set_ros_ws ~/[PATH_TO]/[WS_FOLDER]
+#   ros_select_ws ~/[PATH_TO]/[WS_FOLDER]
 #}
 #
 
