@@ -8,7 +8,7 @@
 ### ROSRC INTERNAL UTILS ###
 ############################
 
-echo "ROSRC: ROS1"
+echo "ROSRC: ROS$ROS_VERSION - $ROS_DISTRO"
 
 # Unset all the defined variables
 function rosrc_reset() {
