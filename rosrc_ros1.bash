@@ -112,7 +112,8 @@ function ros_select_ws() {
 }
 
 function ros_deselect_ws() {
-   rm ${ROSRC_SELECTED_WS_FILE}
+   rm ${ROSRC_SELECTED_WS_FILE} 2> /dev/null
+   ros_source_distro
 }
 
 # SOURCE THE SELECTED WS
