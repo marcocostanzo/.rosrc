@@ -8,17 +8,18 @@
 ### ROSRC INTERNAL UTILS ###
 ############################
 
-echo "ROSRC: ROS$ROS_VERSION - $ROS_DISTRO"
-
 # Unset all the defined variables
 function rosrc_reset() {
-    unset ROSRC_SELECTED_WS
+    unset ROSRC_SELECTED_WS_FILE
     
     unset -f ros_update_ip
     unset -f ros_set_ros_master_uri
     unset -f ros_set_this_as_master
     unset -f ros_select_ws
     unset -f ros_source_ws
+    unset -f ros_localhost
+    unset -f rosrc_get_ws
+    unset -f ros_deselect_ws
 
     unalias roscdws 2> /dev/null
     unalias catkin_build_release 2> /dev/null
@@ -27,10 +28,6 @@ function rosrc_reset() {
 
 # reset
 rosrc_reset
-
-############################
-### INITIALIZE ROSRCVARS ###
-############################
 
 ##################
 ### NETWORKING ###
@@ -99,20 +96,49 @@ function ros_localhost() {
 ### CATKIN_WS ###
 #################
 
+# READ THE ROSWS FOLDER FROM FILE (internal usage)
+function rosrc_get_ws() {
+    if [ -f ${ROSRC_SELECTED_WS_FILE} ]; then
+        head -n 1 ${ROSRC_SELECTED_WS_FILE}
+    else
+        echo ''
+    fi
+}
+
 # SELECT A CATKIN WS
 function ros_select_ws() {
-   export ROSRC_SELECTED_WS=$(realpath $1)
+   echo "$(realpath $1)" > ${ROSRC_SELECTED_WS_FILE}
    ros_source_ws
+}
+
+function ros_deselect_ws() {
+   rm ${ROSRC_SELECTED_WS_FILE}
 }
 
 # SOURCE THE SELECTED WS
 function ros_source_ws() {
-    source $ROSRC_SELECTED_WS/devel/setup.bash
-    echo "ROS WS: $ROSRC_SELECTED_WS"
+    local ROSWS=$(rosrc_get_ws)
+    if [[ ${ROSWS} != "" ]]; then
+        if [ -f ${ROSWS}/devel/setup.bash ]; then
+            source ${ROSWS}/devel/setup.bash
+            echo "ROS WS: ${ROSWS}"
+        else
+            >&2 echo "ROS WS ERROR: ${ROSWS} is an invalid catkin workspace"
+        fi
+    else
+        echo "ROSRC: no ws selected!"
+    fi
 }
 
 # CD IN THE ROOT OF THE SELECTED WS
-alias roscdws='cd $ROSRC_SELECTED_WS'
+function roscdws() {
+    local ROSWS=$(rosrc_get_ws)
+    if [[ ${ROSWS} != "" ]]; then
+        cd $ROSWS
+    else
+        echo "ROSRC: no ws selected!"
+    fi
+}
 
 # build with tag release
 alias catkin_build_release='catkin build -DCMAKE_BUILD_TYPE=Release'
@@ -128,3 +154,17 @@ fi
 if [ -f $(dirname $BASH_SOURCE)/roswsrc ]; then
     source $(dirname $BASH_SOURCE)/roswsrc
 fi
+
+#################
+###  STARTUP  ###
+#################
+
+echo "ROSRC: ROS$ROS_VERSION - $ROS_DISTRO"
+
+############################
+### INITIALIZE ROSRCVARS ###
+############################
+
+ROSRC_SELECTED_WS_FILE=${ROSRC_ROOT}/.ros1_selectedws
+
+ros_source_ws
