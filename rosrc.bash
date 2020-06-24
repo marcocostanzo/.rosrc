@@ -21,16 +21,27 @@ if [ "$(type -t rosrc_clear)" = 'function' ]; then
    rosrc_clear
 fi
 
-#COMPLEATLY CLEAR ALL ROSRC
+# COMPLEATLY CLEAR ALL ROSRC
 function rosrc_clear() {
    if [ "$(type -t rosrc_reset)" = 'function' ]; then
       rosrc_reset
    fi
-   unset -f rosrc_reset
-   unset -f rosrc_clear
-   unalias ros_source_distro 2> /dev/null
    unset ROSRC_ROS_BASE_FOLDER
    unset ROSRC_ROOT
+
+   unset -f rosrc_reset
+   unset -f rosrc_clear
+   unset -f rosrc_update
+   
+   unalias ros_source_distro 2> /dev/null
+   
+}
+
+# UPDATE rosrc
+function rosrc_update() {
+   cd $ROSRC_ROOT
+   git pull
+   cd - > /dev/null
 }
 
 ROSRC_ROS_BASE_FOLDER=$1
