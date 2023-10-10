@@ -28,6 +28,9 @@ function rosrc_clear() {
    fi
    unset ROSRC_ROS_BASE_FOLDER
    unset ROSRC_ROOT
+   unset ROSRC_OLD_PYTHONPATH
+   unset ROSRC_OLD_PATH
+   unset OLD_LD_LIBRARY_PATH
 
    unset -f rosrc_reset
    unset -f rosrc_clear
@@ -49,6 +52,17 @@ ROSRC_ROOT=$(dirname $BASH_SOURCE)
 
 alias ros_source_distro='source ${ROSRC_ROS_BASE_FOLDER}/setup.bash'
 
+# SAVE OLD ENVIRONMENT
+if [[ ${PYTHONPATH} != "" ]]; then
+   ROSRC_OLD_PYTHONPATH=$PYTHONPATH
+fi
+if [[ ${PATH} != "" ]]; then
+   ROSRC_OLD_PATH=$PATH
+fi
+if [[ ${LD_LIBRARY_PATH} != "" ]]; then
+   ROSRC_OLD_LD_LIBRARY_PATH=$LD_LIBRARY_PATH
+fi
+
 #start to source ros
 ros_source_distro
 
@@ -56,11 +70,11 @@ case $ROS_VERSION in
 
    1)
       source $ROSRC_ROOT/rosrc_ros1.bash "$@"
+      return
       ;;
 
   2)
-    >&2 echo "ROSRC: ROS2 SUPPORT WILL BE AVAILABLE SOON..."
-    rosrc_clear
+    source $ROSRC_ROOT/rosrc_ros2.bash "$@"
     return
     ;;
 
