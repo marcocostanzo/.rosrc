@@ -74,14 +74,14 @@ case $ROS_VERSION in
       ;;
 
   2)
-    source $ROSRC_ROOT/rosrc_ros2.bash "$@"
-    return
-    ;;
+      source $ROSRC_ROOT/rosrc_ros2.bash "$@"
+      return
+      ;;
 
   *)
-    >&2 echo "ROSRC: UNSUPPORTED ROS_VERSION: ${ROS_VERSION}"
-    rosrc_clear
-    return
-    ;;
+      >&2 echo "ROSRC: UNSUPPORTED ROS_VERSION: ${ROS_VERSION}"
+      rosrc_clear
+      return
+      ;;
 
 esac
