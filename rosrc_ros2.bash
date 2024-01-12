@@ -120,6 +120,8 @@ function roscdws() {
 # build with --symlink-install
 alias colcon_build_symlink='colcon build --symlink-install'
 
+alias colcon_build_forced='rm -rf build install && ros2_unsource && ros_source_distro && colcon_build_symlink'
+
 # You can create rosmasterrc and roswsrc to create function to select a custom rosmaster or a catkin_ws
 if [ -f $(dirname $BASH_SOURCE)/rosmasterrc ]; then
     source $(dirname $BASH_SOURCE)/rosmasterrc
