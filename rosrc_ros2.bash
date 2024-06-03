@@ -62,10 +62,28 @@ function ros2_unsource() {
 ### NETWORKING ###
 ##################
 
+function ros2_show_domain_info() {
+    if [[ -n $ROS_DOMAIN_ID ]]; then
+        echo "ROS_DOMAIN_ID: ${ROS_DOMAIN_ID}"
+    else
+        echo "ROS_DOMAIN_ID: 0"
+    fi
+    if [[ -n $ROS_LOCALHOST_ONLY ]]; then
+        echo "ROS_LOCALHOST_ONLY: $ROS_LOCALHOST_ONLY"
+    else
+        echo "ROS_LOCALHOST_ONLY: NOT SET"
+    fi
+}
+
 # SET THE DEFAULT ROS_MASTER_URI (localhost)
 function ros2_localhost_only() {
     unset ROS_LOCALHOST_ONLY
     export ROS_LOCALHOST_ONLY=1
+}
+
+# SELECT A COLCON WS
+function ros2_set_domain_id() {
+    export ROS_DOMAIN_ID=$1
 }
 
 #################
@@ -81,7 +99,7 @@ function rosrc_get_ws() {
     fi
 }
 
-# SELECT A CATKIN WS
+# SELECT A COLCON WS
 function ros_select_ws() {
    echo "$(realpath $1)" > ${ROSRC_SELECTED_WS_FILE}
    ros_source_ws
