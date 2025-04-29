@@ -30,7 +30,8 @@ function rosrc_clear() {
    unset ROSRC_ROOT
    unset ROSRC_OLD_PYTHONPATH
    unset ROSRC_OLD_PATH
-   unset OLD_LD_LIBRARY_PATH
+   unset ROSRC_OLD_LD_LIBRARY_PATH
+   unset ROSRC_AMENT_PREFIX_PATH
 
    unset -f rosrc_reset
    unset -f rosrc_clear
@@ -61,6 +62,9 @@ if [[ ${PATH} != "" ]]; then
 fi
 if [[ ${LD_LIBRARY_PATH} != "" ]]; then
    ROSRC_OLD_LD_LIBRARY_PATH=$LD_LIBRARY_PATH
+fi
+if [[ ${AMENT_PREFIX_PATH} != "" ]]; then
+   ROSRC_AMENT_PREFIX_PATH=$AMENT_PREFIX_PATH
 fi
 
 #start to source ros
