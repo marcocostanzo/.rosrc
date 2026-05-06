@@ -2,3 +2,6 @@ roswsrc
 rosmasterrc
 .ros1_selectedws
 .ros2_selectedws
+
+.vscode
+

@@ -13,10 +13,10 @@ git clone https://github.com/marcocostanzo/.rosrc.git ~/.rosrc --depth=1
 Add this in your `~/.bashrc`
 ```bash
 if [ -f ~/.rosrc/rosrc.bash ]; then
-   source ~/.rosrc/rosrc.bash /opt/ros/humble
+   source ~/.rosrc/rosrc.bash /opt/ros/jazzy
    #ros2_set_domain_id 0  # Uncomment to set a different domain ID
-   #ros2_localhost_only   # Uncomment to use local host only
+   #ros2_localhost_only   # Uncomment to set ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST
    ros2_show_domain_info  # Print doamin info
 fi
 ```
-Change `/opt/ros/humble` with your rosdistro install folder.
+Change `/opt/ros/jazzy` with your rosdistro install folder.

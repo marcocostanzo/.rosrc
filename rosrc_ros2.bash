@@ -14,7 +14,7 @@ export LC_NUMERIC=en_US.UTF-8
 # Unset all the defined variables
 function rosrc_reset() {
     unset ROSRC_SELECTED_WS_FILE
-    unset ROS_LOCALHOST_ONLY
+    unset ROS_LOCALHOST_ONLY ROS_AUTOMATIC_DISCOVERY_RANGE ROS_STATIC_PEERS
     
     unset -f ros_localhost
     unset -f ros_source_ws
@@ -36,7 +36,7 @@ rosrc_reset
 ############
 
 function ros2_unsource() {
-    unset COLCON_PREFIX_PATH AMENT_CURRENT_PREFIX AMENT_PREFIX_PATH AMENT_SHELL CMAKE_PREFIX_PATH ROS_DISTRO ROS_LOCALHOST_ONLY ROS_PYTHON_VERSION ROS_VERSION
+    unset COLCON_PREFIX_PATH AMENT_CURRENT_PREFIX AMENT_PREFIX_PATH AMENT_SHELL CMAKE_PREFIX_PATH ROS_DISTRO ROS_LOCALHOST_ONLY ROS_AUTOMATIC_DISCOVERY_RANGE ROS_STATIC_PEERS ROS_PYTHON_VERSION ROS_VERSION
     
     if [[ ${ROSRC_OLD_PYTHONPATH} != "" ]]; then
         PYTHONPATH=$ROSRC_OLD_PYTHONPATH
@@ -68,17 +68,23 @@ function ros2_show_domain_info() {
     else
         echo "ROS_DOMAIN_ID: 0"
     fi
-    if [[ -n $ROS_LOCALHOST_ONLY ]]; then
-        echo "ROS_LOCALHOST_ONLY: $ROS_LOCALHOST_ONLY"
+    if [[ -n $ROS_AUTOMATIC_DISCOVERY_RANGE ]]; then
+        echo "ROS_AUTOMATIC_DISCOVERY_RANGE: ${ROS_AUTOMATIC_DISCOVERY_RANGE}"
     else
-        echo "ROS_LOCALHOST_ONLY: NOT SET"
+        echo "ROS_AUTOMATIC_DISCOVERY_RANGE: NOT SET"
+    fi
+    if [[ -n $ROS_STATIC_PEERS ]]; then
+        echo "ROS_STATIC_PEERS: ${ROS_STATIC_PEERS}"
+    else
+        echo "ROS_STATIC_PEERS: NOT SET"
     fi
 }
 
-# SET THE DEFAULT ROS_MASTER_URI (localhost)
+# Restrict automatic discovery to localhost only.
 function ros2_localhost_only() {
     unset ROS_LOCALHOST_ONLY
-    export ROS_LOCALHOST_ONLY=1
+    unset ROS_STATIC_PEERS
+    export ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST
 }
 
 # SELECT A COLCON WS
